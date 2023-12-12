@@ -3,24 +3,25 @@
 /**
  * get_user_input - Reads a line of input from the user
  * @status: The exit status to use if the end of file is reached
+ * @fp: The file pointer to read from
  *
  * Return: The line read from the user
  */
 
-char *get_user_input(int status)
+char **get_user_input(int status, FILE *fp)
 {
 	char *line = NULL;
 	size_t bufsize = 0;
 	ssize_t len;
 
-	len = getline(&line, &bufsize, stdin);
+	len = getline(&line, &bufsize, fp);
 	if (len == -1)
 	{
 		free(line), line = NULL;
 
-		if (feof(stdin))
+		if (feof(fp))
 		{
-			if (isatty(STDIN_FILENO))
+			if (fp == stdin && isatty(STDIN_FILENO))
 				write(1, "\n", 1);
 			exit(status);
 		}
@@ -31,10 +32,53 @@ char *get_user_input(int status)
 		}
 	}
 
-	if (!isatty(STDIN_FILENO) && len > 0 && line[len - 1] == '\n')
+	if (fp == stdin && !isatty(STDIN_FILENO) && len > 0 && line[len - 1] == '\n')
 		line[len - 1] = '\0';
 
-	return (line);
+	return (split_commands(line));
+}
+
+/**
+ * split_commands - Splits the input line into commands
+ * @line: The input line to be split
+ *
+ * Return: A pointer to the array of commands
+ */
+
+char **split_commands(char *line)
+{
+	int bufsize = 64, position = 0;
+	char **commands = malloc(bufsize * sizeof(char *));
+	char *command;
+
+	if (!commands)
+	{
+		perror("Allocation error");
+		exit(EXIT_FAILURE);
+	}
+
+	command = strtok(line, "&&||;");
+
+	while (command != NULL)
+	{
+		commands[position] = command;
+		position++;
+
+		if (position >= bufsize)
+		{
+			bufsize += 64;
+			commands = realloc(commands, bufsize * sizeof(char *));
+			if (!commands)
+			{
+				perror("Allocation error");
+				exit(EXIT_FAILURE);
+			}
+		}
+
+		command = strtok(NULL, "&&||;");
+	}
+	commands[position] = NULL;
+	return (commands);
 }
 
 /**
@@ -128,74 +172,14 @@ char *int_to_str(int num)
 
 int handle_command_not_found(char **argv, char **args, int command_number)
 {
-	int temp = command_number;
-	int len = 0, i;
-	char *num_str = int_to_str(command_number);
+	char *command_number_str = int_to_str(command_number);
+	(void) argv;
 
-	while (temp != 0)
-	{
-		len++;
-		temp /= 10;
-	}
-
-	num_str = malloc((len + 1) * sizeof(char));
-	if (num_str == NULL)
-	{
-		perror("malloc");
-		return (0);
-	}
-
-	temp = command_number;
-	for (i = len - 1; i >= 0; i--)
-	{
-		num_str[i] = (temp % 10) + '0';
-		temp /= 10;
-	}
-	num_str[len] = '\0';
-
-	write(STDERR_FILENO, argv[0], strlen(argv[0]));
+	write(STDERR_FILENO, "./hsh: ", 7);
+	write(STDERR_FILENO, command_number_str, _strlen(command_number_str));
 	write(STDERR_FILENO, ": ", 2);
-	write(STDERR_FILENO, num_str, strlen(num_str));
-	write(STDERR_FILENO, ": ", 2);
-	write(STDERR_FILENO, args[0], strlen(args[0]));
+	write(STDERR_FILENO, args[0], _strlen(args[0]));
 	write(STDERR_FILENO, ": not found\n", 12);
-
-	free(num_str);
+	free(command_number_str);
 	return (127);
-}
-
-/**
- * execute_command - Executes a command
- * @command_path: The path to the command
- * @args: The arguments to the command
- * @argv: The argument vector
- * @status: The exit status of the command
- *
- * Return: The exit status of the command
- */
-
-int execute_command(char *command_path, char **args, char **argv, int *status)
-{
-	pid_t pid = fork();
-
-	if (pid == 0)
-	{
-		if (execve(command_path, args, environ) == -1)
-		{
-			perror(argv[0]);
-			exit(EXIT_FAILURE);
-		}
-	}
-	else if (pid < 0)
-	{
-		perror(argv[0]);
-	}
-	else
-	{
-		do {
-			waitpid(pid, status, WUNTRACED);
-		} while (!WIFEXITED(*status) && !WIFSIGNALED(*status));
-	}
-
-	return (*status);
 }

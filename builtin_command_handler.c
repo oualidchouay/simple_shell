@@ -1,16 +1,17 @@
 #include "shell.h"
 
 /**
- * check_if_builtin_command - asked if it is a builtin command
- * @command: the execution command
- * Return: 0 if succeeded
+ * check_if_builtin_command - Checks if a command is a built-in command
+ * @command: The command to check
+ *
+ * Return: 1 if the command is a built-in command, 0 otherwise
  */
 
 int check_if_builtin_command(char *command)
 {
 	char *builtins_cmd[] = {
 		"exit", "env", "setenv",
-		"cd", NULL
+		"unsetenv", "cd", "alias", NULL
 	};
 	int a;
 
@@ -25,41 +26,89 @@ int check_if_builtin_command(char *command)
 }
 
 /**
- * process_builtin_command - handle the builtin command
- * @command: the execution command
- * @argv: (void) argv
- * @status: the number of commands to exit with
+ * process_builtin_command - Processes a built-in command
+ * @shell_data: A pointer to the shell data structure
+ * @command: The command to process
+ * @argv: The argument vector
+ * @status: The exit status of the last command executed
+ * @command_number: The number of the current command
  */
 
-void process_builtin_command(char **command, char **argv, int *status)
+void process_builtin_command(shell_data_t *shell_data, char **command,
+char **argv, int *status, int command_number)
 {
 	(void) argv;
 
 	if (_strcmp(command[0], "exit") == 0)
 	{
-		terminate_shell(command, status);
+		terminate_shell(command, status, command_number);
 	}
 	else if (_strcmp(command[0], "env") == 0)
 	{
 		display_env_vars(status);
 	}
+	else if (_strcmp(command[0], "setenv") == 0)
+	{
+		set_env_var(command, status, command_number);
+	}
+	else if (_strcmp(command[0], "unsetenv") == 0)
+	{
+		unset_env_var(command, status, command_number);
+	}
+	else if (_strcmp(command[0], "cd") == 0)
+	{
+		change_directory(command, status);
+	}
+	else if (_strcmp(command[0], "alias") == 0)
+	{
+		handle_alias_command(shell_data, command, status);
+	}
 }
 
 /**
- * terminate_shell - exit shell if the command is exit
- * @command: the execution command
- * @status: number of commands
+ * terminate_shell - Terminates the shell
+ * @command: The command that caused the shell to terminate
+ * @status: The exit status of the last command executed
+ * @command_number: The number of the current command
  */
 
-void terminate_shell(char **command, int *status)
+void terminate_shell(char **command, int *status, int command_number)
 {
-	free_array(command);
-	exit(*status);
+	int exit_status = 0;
+
+	if (command[1] != NULL)
+	{
+		char *endptr;
+
+		exit_status = strtol(command[1], &endptr, 10);
+		if (*endptr != '\0' || endptr == command[1] || exit_status < 0)
+		{
+			write(STDERR_FILENO, "./hsh: ", 7);
+			write(STDERR_FILENO, int_to_str(command_number),
+			_strlen(int_to_str(command_number)));
+			write(STDERR_FILENO, ": exit: Illegal number: ", 24);
+			write(STDERR_FILENO, command[1], _strlen(command[1]));
+			write(STDERR_FILENO, "\n", 1);
+			*status = 2;
+			return;
+		}
+	}
+	else
+	{
+		exit_status = *status;
+	}
+
+	if (command[0] != NULL)
+	{
+		free(command[0]);
+	}
+	free(command);
+	exit(exit_status);
 }
 
 /**
- * display_env_vars - print the environment
- * @status: the number of commands
+ * display_env_vars - Displays the environment variables
+ * @status: The exit status of the last command executed
  */
 
 void display_env_vars(int *status)
@@ -91,3 +140,4 @@ void display_env_vars(int *status)
 	}
 	*status = 0;
 }
+

@@ -50,3 +50,40 @@ char *get_command_path(char *command)
 
 	return (command_path);
 }
+
+/**
+ * execute_command - Executes a command
+ * @command_path: The path to the command
+ * @args: The arguments to the command
+ * @argv: The argument vector
+ * @status: The exit status of the command
+ *
+ * Return: The exit status of the command
+ */
+
+int execute_command(char *command_path, char **args, char **argv, int *status)
+{
+	pid_t pid = fork();
+
+	if (pid == 0)
+	{
+		if (execve(command_path, args, environ) == -1)
+		{
+			perror(argv[0]);
+			exit(EXIT_FAILURE);
+		}
+	}
+	else if (pid < 0)
+	{
+		perror(argv[0]);
+	}
+	else
+	{
+		do {
+			waitpid(pid, status, WUNTRACED);
+		} while (!WIFEXITED(*status) && !WIFSIGNALED(*status));
+	}
+
+	return (*status);
+}
+
