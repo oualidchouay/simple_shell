@@ -4,6 +4,7 @@
 -   By Julien Barbier
 -   Project to be done in teams of 2 people (your team: Oualid Chouay, Anton Adel Adel)
 
+
 Concepts
 --------
 
@@ -13,6 +14,7 @@ Concepts
 -   [Approaching a Project](https://intranet.alxswe.com/concepts/350 "Approaching a Project")
 -	[All about Team Projects + Pairings + FAQ (A must read)](https://intranet.alxswe.com/concepts/100037 "All about Team Projects + Pairings + FAQ (A must read)")
 -	[Struggling with the sandbox? Try this: Using Docker & WSL on your local host](https://intranet.alxswe.com/concepts/100039 "Struggling with the sandbox? Try this: Using Docker & WSL on your local host")
+
 
 Background Context
 ------------------
@@ -86,10 +88,12 @@ Resources
 
 -   `sh` (*Run `sh` as well*)
 
+
 Learning Objectives
 -------------------
 
 At the end of this project, you are expected to be able to [explain to anyone](https://alx-intranet.hbtn.io/rltoken/4mHp8pZKm5sjL4-TEJEKeg "explain to anyone"), **without the help of Google**:
+
 
 ### General
 
@@ -127,7 +131,8 @@ Requirements
 
 ### GitHub
 
-*There should be one project repository per group. If you and your partner have a repository with the same name in both your accounts, you risk a 0% score. Add your partner as a collaborator. *
+*There should be one project repository per group. If you and your partner have a repository with the same name in both your accounts, you risk a 0% score. Add your partner as a collaborator.*
+
 
 More Info
 ---------
@@ -193,6 +198,7 @@ $
 -   `wait4` (man 2 wait4)
 -   `write` (man 2 write)
 
+
 ### Compilation
 
 Your shell will be compiled this way:
@@ -241,19 +247,22 @@ The Checker will be released at the end of the project (1-2 days before the dead
 Tasks
 -----
 
+**mandatory**
+
+-------------------------------------------------------
 ### 0\. Betty would be proud
-#mandatory
 
 Write a beautiful code that passes the Betty checks
 
 **Repo:**
 
 -   GitHub repository: `simple_shell`
+-------------------------------------------------------
 
 
+
+-------------------------------------------------------
 ### 1\. Simple shell 0.1
-
-#mandatory
 
 Write a UNIX command line interpreter.
 
@@ -305,11 +314,12 @@ env-environ.c  exec    fork    mypid   ppid   printenv  promptc  shell     stat 
 **Repo:**
 
 -   GitHub repository: `simple_shell`
+-------------------------------------------------------
 
 
+
+-------------------------------------------------------
 ### 2\. Simple shell 0.2
-
-mandatory
 
 Simple shell 0.1 +
 
@@ -318,11 +328,12 @@ Simple shell 0.1 +
 **Repo:**
 
 -   GitHub repository: `simple_shell`
+-------------------------------------------------------
 
 
+
+-------------------------------------------------------
 ### 3\. Simple shell 0.3
-
-mandatory
 
 Simple shell 0.2 +
 
@@ -352,11 +363,12 @@ julien@ubuntu:~/shell$
 **Repo:**
 
 -   GitHub repository: `simple_shell`
+-------------------------------------------------------
 
 
+
+-------------------------------------------------------
 ### 4\. Simple shell 0.4
-
-mandatory
 
 Simple shell 0.3 +
 
@@ -367,11 +379,12 @@ Simple shell 0.3 +
 **Repo:**
 
 -   GitHub repository: `simple_shell`
+-------------------------------------------------------
 
 
+
+-------------------------------------------------------
 ### 5\. Simple shell 1.0
-
-mandatory
 
 Simple shell 0.4 +
 
@@ -400,10 +413,12 @@ julien@ubuntu:~/shell$
 **Repo:**
 
 -   GitHub repository: `simple_shell`
+-------------------------------------------------------
 
+**Advanced**
+
+-------------------------------------------------------
 ### 6\. Simple shell 0.1.1
-
-advanced
 
 Simple shell 0.1 +
 
@@ -419,11 +434,12 @@ You don’t have to:
 **Repo:**
 
 -   GitHub repository: `simple_shell`
+-------------------------------------------------------
 
 
+
+-------------------------------------------------------
 ### 7\. Simple shell 0.2.1
-
-advanced
 
 Simple shell 0.2 +
 
@@ -432,11 +448,12 @@ Simple shell 0.2 +
 **Repo:**
 
 -   GitHub repository: `simple_shell`
+-------------------------------------------------------
 
 
+
+-------------------------------------------------------
 ### 8\. Simple shell 0.4.1
-
-advanced
 
 Simple shell 0.4 +
 
@@ -455,11 +472,12 @@ julien@ubuntu:~/shell$
 **Repo:**
 
 -   GitHub repository: `simple_shell`
+-------------------------------------------------------
 
 
+
+-------------------------------------------------------
 ### 9\. setenv, unsetenv
-
-mandatory
 
 Simple shell 1.0 +
 
@@ -477,11 +495,13 @@ Implement the `setenv` and `unsetenv` builtin commands
 **Repo:**
 
 -   GitHub repository: `simple_shell`
+-------------------------------------------------------
 
 
+
+
+-------------------------------------------------------
 ### 10\. cd
-
-advanced
 
 Simple shell 1.0 +
 
@@ -498,11 +518,12 @@ Implement the builtin command `cd`:
 **Repo:**
 
 -   GitHub repository: `simple_shell`
+-------------------------------------------------------
 
 
+
+-------------------------------------------------------
 ### 11\. ;
-
-advanced
 
 Simple shell 1.0 +
 
@@ -530,11 +551,12 @@ alex@~$
 **Repo:**
 
 -   GitHub repository: `simple_shell`
+-------------------------------------------------------
 
 
+
+-------------------------------------------------------
 ### 12\. && and ||
-
-advanced
 
 Simple shell 1.0 +
 
@@ -579,11 +601,13 @@ alex@~$
 **Repo:**
 
 -   GitHub repository: `simple_shell`
+-------------------------------------------------------
 
 
+
+
+-------------------------------------------------------
 ### 13\. alias
-
-advanced
 
 Simple shell 1.0 +
 
@@ -596,11 +620,12 @@ Simple shell 1.0 +
 **Repo:**
 
 -   GitHub repository: `simple_shell`
+-------------------------------------------------------
 
 
+
+-------------------------------------------------------
 ### 14\. Variables
-
-advanced
 
 Simple shell 1.0 +
 
@@ -626,11 +651,12 @@ julien@ubuntu:~/shell$
 **Repo:**
 
 -   GitHub repository: `simple_shell`
+-------------------------------------------------------
 
 
+
+-------------------------------------------------------
 ### 15\. Comments
-
-advanced
 
 Simple shell 1.0 +
 
@@ -648,11 +674,13 @@ julien@ubuntu:~/shell$
 **Repo:**
 
 -   GitHub repository: `simple_shell`
+-------------------------------------------------------
 
 
+
+
+-------------------------------------------------------
 ### 16\. File as input
-
-advanced
 
 Simple shell 1.0 +
 
@@ -669,3 +697,5 @@ Well done on completing this project! Let the world hear about this milestone ac
 **Repo:**
 
 -   GitHub repository: `simple_shell`
+-------------------------------------------------------
+
